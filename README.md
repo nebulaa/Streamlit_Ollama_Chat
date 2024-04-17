@@ -33,7 +33,7 @@ This project utilizes Ollama, an open-source library, to query the open-source L
 2. Run the Streamlit app:
 
     ```shell
-    streamlit run app.py
+    streamlit run chat.py
     ```
 
 3. Open your web browser and visit `http://localhost:8501` to access the Ollama chat interface.
