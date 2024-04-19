@@ -1,7 +1,15 @@
 import streamlit as st
 from langchain_community.llms import Ollama
+from langchain_core.output_parsers import StrOutputParser
 
-llm = Ollama(model="llama2-uncensored")
+def process_answer(prompt):
+    model_local = Ollama(model="llama2-uncensored")
+
+    after_rag_chain = (
+        model_local
+        | StrOutputParser()
+    )
+    return after_rag_chain.invoke(prompt)
 
 st.title("Query with Ollama")
 
@@ -23,8 +31,8 @@ if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
 
     with st.spinner("Processing..."):
-        answer = llm.invoke(prompt)
         bot_message = st.chat_message("assistant")
+        answer = process_answer(prompt)
         st.session_state.messages.append({"role": "assistant", "content": answer})
         bot_message.write(f"{answer}")
         
